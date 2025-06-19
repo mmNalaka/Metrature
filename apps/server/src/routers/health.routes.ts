@@ -1,5 +1,4 @@
 import { Elysia } from "elysia";
-import { OpenAPI } from "@/lib/openapi";
 
 // Track server start time for uptime reporting
 const startTime = Date.now();
