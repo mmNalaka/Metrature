@@ -1,9 +1,21 @@
 import "dotenv/config";
+
 import { cors } from "@elysiajs/cors";
+import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
+
 import { auth } from "./lib/auth";
+import { OpenAPI } from "./lib/openapi";
 
 const app = new Elysia()
+	.use(
+		swagger({
+			documentation: {
+				components: await OpenAPI.components,
+				paths: await OpenAPI.getPaths(),
+			},
+		}),
+	)
 	.use(
 		cors({
 			origin: process.env.CORS_ORIGIN || "",

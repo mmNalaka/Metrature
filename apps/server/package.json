@@ -20,7 +20,7 @@
 		"@elysiajs/cors": "^1.2.0",
 		"drizzle-orm": "^0.38.4",
 		"pg": "^8.14.1",
-		"better-auth": "^1.2.9"
+		"better-auth": "^1.2.7"
 	},
 	"devDependencies": {
 		"tsc-alias": "^1.8.11",
