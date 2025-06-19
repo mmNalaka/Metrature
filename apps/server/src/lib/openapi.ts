@@ -1,5 +1,7 @@
-import { openAPI } from "better-auth/plugins";
-import { auth } from "./auth";
+import { swagger } from "@elysiajs/swagger";
+import Elysia from "elysia";
+
+import { auth } from "@/lib/auth";
 
 let _schema: ReturnType<typeof auth.api.generateOpenAPISchema>;
 // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
@@ -28,3 +30,12 @@ export const OpenAPI = {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	components: getSchema().then(({ components }) => components) as Promise<any>,
 } as const;
+
+export const openapiHandler = new Elysia().use(
+	swagger({
+		documentation: {
+			components: await OpenAPI.components,
+			paths: await OpenAPI.getPaths(),
+		},
+	}),
+);

@@ -1,37 +1,27 @@
 import "dotenv/config";
 
 import { cors } from "@elysiajs/cors";
-import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 
-import { auth } from "./lib/auth";
-import { OpenAPI } from "./lib/openapi";
+import { corsConfig } from "@/config/cors.config";
+import { openapiHandler } from "@/lib/openapi";
+
+import { authRoutes } from "@/routers/auth.routes";
+import { healthRoutes } from "@/routers/health.routes";
 
 const app = new Elysia()
-	.use(
-		swagger({
-			documentation: {
-				components: await OpenAPI.components,
-				paths: await OpenAPI.getPaths(),
-			},
-		}),
-	)
-	.use(
-		cors({
-			origin: process.env.CORS_ORIGIN || "",
-			methods: ["GET", "POST", "OPTIONS"],
-			allowedHeaders: ["Content-Type", "Authorization"],
-			credentials: true,
-		}),
-	)
-	.all("/api/auth/*", async (context) => {
-		const { request } = context;
-		if (["POST", "GET"].includes(request.method)) {
-			return auth.handler(request);
-		}
-		context.error(405);
-	})
-	.get("/", () => "OK")
-	.listen(3000, () => {
-		console.log("Server is running on http://localhost:3000");
+	// Plugins
+	.use(openapiHandler)
+	.use(cors(corsConfig))
+
+	// Routes
+	.use(healthRoutes)
+	.use(authRoutes)
+
+	// Start Server
+	.listen(3000, (s) => {
+		console.info(`Server is running on http://${s.hostname}:${s.port}`);
+		console.info(
+			`Swagger is running on http://${s.hostname}:${s.port}/swagger`,
+		);
 	});
