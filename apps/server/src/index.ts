@@ -9,7 +9,7 @@ import { openapiHandler } from "@/lib/openapi";
 import { authRoutes } from "@/routers/auth.routes";
 import { healthRoutes } from "@/routers/health.routes";
 
-const app = new Elysia()
+const _app = new Elysia()
 	// Plugins
 	.use(openapiHandler)
 	.use(cors(corsConfig))
