@@ -4,7 +4,7 @@ import Elysia from "elysia";
 import { auth } from "@/lib/auth";
 
 let _schema: ReturnType<typeof auth.api.generateOpenAPISchema>;
-// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+// biome-ignore lint/suspicious/noAssignInExpressions: remove linting errors
 const getSchema = async () => (_schema ??= auth.api.generateOpenAPISchema());
 
 export const OpenAPI = {
@@ -17,7 +17,7 @@ export const OpenAPI = {
 				reference[key] = paths[path];
 
 				for (const method of Object.keys(paths[path])) {
-					// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+					// biome-ignore lint/suspicious/noExplicitAny: remove linting errors
 					const operation = (reference[key] as any)[method];
 
 					operation.tags = ["Auth"];
@@ -25,9 +25,9 @@ export const OpenAPI = {
 			}
 
 			return reference;
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+			// biome-ignore lint/suspicious/noExplicitAny: remove linting errors
 		}) as Promise<any>,
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: remove linting errors
 	components: getSchema().then(({ components }) => components) as Promise<any>,
 } as const;
 
