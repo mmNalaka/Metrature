@@ -15,6 +15,13 @@
 			"when": 1750400111670,
 			"tag": "0001_medical_iron_lad",
 			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "7",
+			"when": 1750705862903,
+			"tag": "0002_bizarre_stardust",
+			"breakpoints": true
 		}
 	]
 }
